@@ -1,6 +1,6 @@
 ID=$(id -u)
 
-if [ $ID -ne 0]; then 
+if [ $ID -ne 0 ]; then 
     echo "you are not running as root and this will fail"
     exit 1
 fi 
@@ -45,6 +45,10 @@ APP_PREREQ() {
 
     mv ${COMPONENT}-main ${COMPONENT} 
 
+    echo "Install NodeJS dependencies"
+    cd /home/roboshop
+    cd ${COMPONENT}
+
 }
 
 
@@ -81,13 +85,8 @@ NODEJS() {
 
     APP_PREREQ
 
-    echo "Install NodeJS dependencies"
-
-    cd /home/roboshop
-    cd ${COMPONENT}
+    
     npm install &>>${LOG_FILE}
     STATUS_CHECK $?
 }
-JAVA() {}
-PYTHON() {}
-GOLANG() {}
+
