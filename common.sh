@@ -88,5 +88,9 @@ NODEJS() {
     echo "installing NodeJS dependencies"
     npm install &>>${LOG_FILE}
     STATUS_CHECK $?
+
+    SYSTEMD_SETUP
+
+
 }
 
