@@ -45,7 +45,7 @@ APP_PREREQ() {
 
     mv ${COMPONENT}-main ${COMPONENT} 
 
-    echo "Install NodeJS dependencies"
+    
     cd /home/roboshop
     cd ${COMPONENT}
 
@@ -85,7 +85,7 @@ NODEJS() {
 
     APP_PREREQ
 
-    
+    echo "installing NodeJS dependencies"
     npm install &>>${LOG_FILE}
     STATUS_CHECK $?
 }
