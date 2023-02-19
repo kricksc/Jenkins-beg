@@ -93,3 +93,20 @@ NODEJS() {
 
 
 }
+
+MAVEN() {
+
+    echo "Install maven"
+    yum install maven -y &>>${LOG_FILE}
+    Statuscheck $?
+
+    APP_PREREQ
+
+    echo " Installing the dependencies "
+    mvn clean package  &>>${LOG_FILE}
+    mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar  &>>${LOG_FILE}
+    Statuscheck $?
+
+    SYSTEMD_SETUP
+
+}
