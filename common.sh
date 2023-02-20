@@ -44,8 +44,8 @@ APP_PREREQ() {
 
 
     mv ${COMPONENT}-main ${COMPONENT} 
-
-    
+    STATUS_CHECK $?
+ 
     cd /home/roboshop
     cd ${COMPONENT}
 
@@ -98,15 +98,55 @@ MAVEN() {
 
     echo "Install maven"
     yum install maven -y &>>${LOG_FILE}
-    Statuscheck $?
+    STATUS_CHECK $?
 
     APP_PREREQ
 
     echo " Installing the dependencies "
     mvn clean package  &>>${LOG_FILE}
     mv target/${COMPONENT}-1.0.jar ${COMPONENT}.jar  &>>${LOG_FILE}
-    Statuscheck $?
+    STATUS_CHECK $?
 
     SYSTEMD_SETUP
+
+}
+
+PYTHON() {
+    echo "Setup python on VM"
+    yum install python36 gcc python3-devel -y &>>${LOG_FILE}
+    STATUS_CHECK $?
+
+    APP_PREREQ
+
+    echo "installing the dependencies"
+    pip3 install -r requirements.txt &>>${LOG_FILE}
+    STATUS_CHECK $?
+
+    SYSTEMD_SETUP
+
+}
+GOLANG() {
+    echo "setting up golang on VM" 
+    yum install golang -y &>>${LOG_FILE}
+    STATUS_CHECK $?
+
+    APP_PREREQ
+
+    go mod init ${COMPONENT} &>>${LOG_FILE}
+    STATUS_CHECK $?
+
+
+    echo "Doing the golang build"
+    go get  
+    go build &>>${LOG_FILE}
+    STATUS_CHECK $? 
+   
+
+    SYSTEMD_SETUP
+
+
+
+
+
 
 }
