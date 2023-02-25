@@ -25,7 +25,7 @@ curl -s -L -o /tmp/frontend.zip "https://github.com/roboshop-devops-project/fron
 STATUS_CHECK $?
 
 echo "Deploy the downloaded content in Nginx Default Location."
-cd /usr/share/nginx/html
+cd /usr/share/nginx/html || exit
 rm -rf *
 unzip /tmp/frontend.zip
 mv frontend-main/static/* .
