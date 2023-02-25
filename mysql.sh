@@ -43,7 +43,7 @@ FLUSH PRIVILEGES; " > /tmp/set-root-passwd.sql
 echo "show databases;" | mysql --connect-expired-password -uroot -p${DEFAULT_PASSWORD}
 if [ $? -ne 0 ]; then 
 echo " change the default password"
-mysql --connect-expired-password -uroot -p${DEFAULT_PASSWORD} < /tmp/set-root-passwd.sql 
+mysql --connect-expired-password -u root -p ${DEFAULT_PASSWORD} < /tmp/set-root-passwd.sql 
 #&>>$LOG_FILE
 #Statuscheck $?
 echo " uninstall plugin validate_password; " | mysql -uroot -p$1 &>>$LOG_FILE
