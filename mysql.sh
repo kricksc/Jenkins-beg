@@ -15,7 +15,6 @@ then
 fi 
 
 
-
 source ./common.sh 
 
 echo "setup the repo for mysql"
@@ -34,7 +33,7 @@ systemctl start mysqld  &>>$LOG_FILE
 STATUS_CHECK $?
 
 
-DEFAULT_PASSWORD=$(grep 'A temporary password' /var/log/mysqld.log | cut -d " " -f 11)
+DEFAULT_PASSWORD=${grep 'A temporary password' /var/log/mysqld.log | cut -d " " -f 11}
 
 
 echo " ALTER USER 'root'@'localhost' IDENTIFIED BY '$1';
