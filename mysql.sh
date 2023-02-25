@@ -36,16 +36,15 @@ STATUS_CHECK $?
 DEFAULT_PASSWORD=${grep 'A temporary password' /var/log/mysqld.log | cut -d " " -f 11}
 
 
-echo " ALTER USER 'root'@'localhost' IDENTIFIED BY '$1';
+echo " ALTER USER 'root'@'localhost' IDENTIFIED BY '${1}';
 FLUSH PRIVILEGES; " > /tmp/set-root-passwd.sql
 
 
-echo "show databases;" | mysql --connect-expired-password -uroot -p${DEFAULT_PASSWORD}
+echo "show databases;" | mysql -uroot -p${DEFAULT_PASSWORD}
 if [ $? -ne 0 ]; then 
 echo " change the default password"
-mysql --connect-expired-password -u root -p${DEFAULT_PASSWORD} < /tmp/set-root-passwd.sql 
-#&>>$LOG_FILE
-#Statuscheck $?
+mysql -u root -p${DEFAULT_PASSWORD} < /tmp/set-root-passwd.sql &>>$LOG_FILE
+Statuscheck $?
 echo " uninstall plugin validate_password; " | mysql -uroot -p$1 &>>$LOG_FILE
 STATUS_CHECK $?
 fi 
