@@ -1,0 +1,3 @@
+for $component in catalogue user cart payment shipping frontend mongodb redis mysql rabbitmq dispatch; do 
+  az vm create --resource-group roboshopRG --name $component --image OpenLogic:CentOS-LVM:8-lvm:8.2.2020100700 --admin-username centos-robo --admin-password DevOps654321 \
+  --public-ip-sku Standard --vnet-name  --subnet default  --admin-username centos --admin-password DevOps654321 --public-ip-address "" --size Standard_B1s --nsg ""
